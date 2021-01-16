@@ -15,10 +15,10 @@
   if($user){
         echo " <script>alert('your email is already taken')</script> ";
   }else{
-        $statment=$pdo->prepare("INSERT INTO users(name,email,password)
-         VALUES (:name,:email,:password)");
+        $statment=$pdo->prepare("INSERT INTO users(name,email,password,role)
+         VALUES (:name,:email,:password,:role)");
         $result=$statment->execute(
-        array(':name'=>$name,':email'=>$email,':password'=>$password)
+        array(':name'=>$name,':email'=>$email,':password'=>$password,':role'=>0)
         );
         if ($result)
         {

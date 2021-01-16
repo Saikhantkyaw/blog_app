@@ -1,7 +1,9 @@
   <!-- Main Footer -->
+<div>
+	
 
   <footer class="main-footer" style="margin-left: 0px !important;">
-    <div class="float-right ">
+    <div style="float:right !important;">
      <a href="logout.php" class="btn btn-dark">Log out</a>
     </div>
     <strong>Copyright &copy; 2020 <a href="https://adminlte.io">Sai Khant kyaw</a>.</strong> All rights reserved.

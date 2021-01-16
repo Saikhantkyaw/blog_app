@@ -15,13 +15,17 @@ $post_id= $_GET['id'];
 
  $statment1=$pdo->prepare("SELECT * FROM comments WHERE post_id=$post_id");
  $statment1->execute();
- $cmresult= $statment1->fetchall();
 
- $au_id=$cmresult[0]['user_id'];
+
+ $cmresult= $statment1->fetchall();
+ $userresult=[];
+ foreach ($cmresult as $key => $value) {
+ $au_id=$cmresult[$key]['user_id'];
  
  $statment2=$pdo->prepare("SELECT * FROM users WHERE id=$au_id");
  $statment2->execute();
- $userresult= $statment2->fetchall();
+ $userresult[]= $statment2->fetchall();
+ }
 
  //$post_id=$_GET['id'];
  if ($_POST) {
@@ -86,18 +90,23 @@ $post_id= $_GET['id'];
                <p><?=$result[0]['content'] ?></p> 
               </div>
               <h3>Comment</h3>
+              
               <!-- /.card-body -->
               <div class="card-footer card-comments">
                 <div class="card-comment" style="margin:left  !important;">
                 
-                  <div class="comment-text" >
-                    <span class="username" style="margin:left  !important;">
-                      <?php echo $userresult[0]['name']; ;?>
+                  <?php if ($cmresult) { ?>
+                    <div class="comment-text" >
+                    <?php foreach ($cmresult as $key => $value): ?>
+                      <span class="username" style="margin:left  !important;">
+                      <?php echo $userresult[$key][0]['name']; ;?>
                       <span class="text-muted float-right">
-                        <?php echo $cmresult[0]['created_at'] ?></span>
+                        <?php echo $value['created_at'] ?></span>
                     </span><!-- /.username -->
-                    <?php echo $cmresult[0]['content']; ?>
+                    <?php echo $value['content']; ?>
+                    <?php endforeach ?>
                   </div>
+                  <?php } ?>
                   <!-- /.comment-text -->
                 </div>
                 <!-- /.card-comment -->
@@ -135,6 +144,7 @@ $post_id= $_GET['id'];
  <footer class="main-footer" style="margin-left: 0px !important;">
     <div class="float-right ">
      <a href="logout.php" class="btn btn-dark">Log out</a>
+      <a href="index.php" class="btn btn-warning">Back</a>
     </div>
     <strong>Copyright &copy; 2020 <a href="https://adminlte.io">Sai Khant kyaw</a>.</strong> All rights reserved.
   </footer>

@@ -5,6 +5,9 @@
  {
  	header("Location:login.php");
  }
+  if ( $_SESSION['role']!=1) {
+   header("Location:login.php");
+ }
   $statment= $pdo->prepare("SELECT * FROM posts ORDER BY id DESC");
   $statment->execute();
   $result=$statment->FETCHALL();

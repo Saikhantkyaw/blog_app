@@ -6,6 +6,8 @@ session_start();
  	header("Location:login.php");
  }
   
+  
+
 
 
  ?>
@@ -37,13 +39,29 @@ session_start();
     <!-- Content Header (Page header) -->
    <?php 
 
-   
+              if (!empty($_GET['pageno'])) {
+                $pageno=$_GET['pageno'];
+              }else{
+                $pageno=1;
+              }
+              $noOfrec=6;
+              $offset=($pageno-1)*$noOfrec;
               $statment= $pdo->prepare("SELECT * FROM posts ORDER BY id DESC");
               $statment->execute();
-              $result=$statment->FETCHALL();
+              $rawResult=$statment->FETCHALL();
+              $total_pages=ceil(count($rawResult)/$noOfrec);
 
+          $statment= $pdo->prepare("SELECT * FROM posts ORDER BY id DESC LIMIT $offset,$noOfrec");
+              $statment->execute();
+              $result=$statment->FETCHALL();
+   
+            
     ?>
+ <section>
+ 	
+ 
       <div class="container-fluid">
+
         
             <h1 style="text-align: center;">Blog site</h1>
          
@@ -87,11 +105,32 @@ session_start();
         
            
               </div>
+           
               <!-- /.card-footer -->
      
       </div>
+          <div class="row" style="float:right !important;">
+              	     <nav aria-label="Page navigation example" >
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" href="?pageno=1">First</a></li>
+                  <li class="page-item" <?php if($pageno<=1){echo 'disabled';} ?>>
+<a class="page-link" href="<?php if($pageno<=1){echo "#";}else{echo "?pageno=".($pageno-1);} ?>">                  Previous</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#"><?= $pageno; ?></a></li>
+                <li class="page-item" <?php if($pageno>=$total_pages){echo 'disabled';} ?>>
+                 <a class="page-link" 
+      href="<?php if($pageno>=$total_pages){echo "#";}else{echo "?pageno=".($pageno+1);} ?>">
+                    Next</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="?pageno=<?= $total_pages; ?>">Last</a>
+                  </li>
+                </ul>
+              </nav>
+              	
+              </div><br><br><br>
       
  
+     </section>
 
    
  
