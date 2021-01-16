@@ -26,7 +26,7 @@
               }else{
                 $pageno=1;
               }
-              $noOfrec=1;
+              $noOfrec=5;
               $offset=($pageno-1)*$noOfrec;
 
 

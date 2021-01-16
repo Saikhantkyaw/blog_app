@@ -1,4 +1,14 @@
-<?php  ?>
+<?php 
+session_start();
+ require("connection/config.php");
+ if (empty(  $_SESSION['user_id'])&&empty(  $_SESSION['logged_in'])) 
+ {
+ 	header("Location:login.php");
+ }
+  
+
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,18 +35,30 @@
   <!-- Content Wrapper. Contains page content -->
   
     <!-- Content Header (Page header) -->
+   <?php 
+
    
+              $statment= $pdo->prepare("SELECT * FROM posts ORDER BY id DESC");
+              $statment->execute();
+              $result=$statment->FETCHALL();
+
+    ?>
       <div class="container-fluid">
         
             <h1 style="text-align: center;">Blog site</h1>
          
         <div class="row">
-          <div class="col-md-4">
+        	  <?php 
+           			if ($result) 
+           			{$i=1;
+           				foreach ($result as $value) 
+           				{?>
+           		  <div class="col-md-4">
             <!-- Box Comment -->
             <div class="card card-widget">
               <div class="card-header">
                 <div class="user-block" style="text-align: center !important;float:none;">
-                <h4>BLog title</h4>
+                <h4> <?php echo $value['title']; ?></h4>
                 </div>
                 <!-- /.user-block -->
                 
@@ -44,140 +66,42 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <img class="img-fluid pad" src="dist/img/photo2.png" alt="Photo">
+               <a href="blogdetail.php?id=<?php echo $value['id']; ?>" title="">
+               <img src="admin/images/<?php echo $value['image']; ?>" class="img-fluid pad"
+               style="height: 200 !important;"></a>
 
-                <p>I took this photo this morning. What do you guys think?</p>
+                <p> <?php echo $value['content']; ?> </p>
               
               </div>
           </div>
            
               </div>
-               <div class="col-md-4">
-            <!-- Box Comment -->
-            <div class="card card-widget">
-              <div class="card-header">
-                <div class="user-block" style="text-align: center !important;float:none;">
-                <h4>BLog title</h4>
-                </div>
-                <!-- /.user-block -->
-                
-                <!-- /.card-tools -->
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <img class="img-fluid pad" src="dist/img/photo2.png" alt="Photo">
+          
+           					
+           		<?php	$i++;
+           				}
+           			}
 
-                <p>I took this photo this morning. What do you guys think?</p>
-              
-              </div>
-          </div>
-           
-              </div>
-               <div class="col-md-4">
-            <!-- Box Comment -->
-            <div class="card card-widget">
-              <div class="card-header">
-                <div class="user-block" style="text-align: center !important;float:none;">
-                <h4>BLog title</h4>
-                </div>
-                <!-- /.user-block -->
-                
-                <!-- /.card-tools -->
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <img class="img-fluid pad" src="dist/img/photo2.png" alt="Photo">
-
-                <p>I took this photo this morning. What do you guys think?</p>
-              
-              </div>
-          </div>
+                  ?>
+                    
+        
            
               </div>
               <!-- /.card-footer -->
      
       </div>
-       <div class="row">
-          <div class="col-md-4">
-            <!-- Box Comment -->
-            <div class="card card-widget">
-              <div class="card-header">
-                <div class="user-block" style="text-align: center !important;float:none;">
-                <h4>BLog title</h4>
-                </div>
-                <!-- /.user-block -->
-                
-                <!-- /.card-tools -->
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <img class="img-fluid pad" src="dist/img/photo2.png" alt="Photo">
-
-                <p>I took this photo this morning. What do you guys think?</p>
-              
-              </div>
-          </div>
-           
-              </div>
-               <div class="col-md-4">
-            <!-- Box Comment -->
-            <div class="card card-widget">
-              <div class="card-header">
-                <div class="user-block" style="text-align: center !important;float:none;">
-                <h4>BLog title</h4>
-                </div>
-                <!-- /.user-block -->
-                
-                <!-- /.card-tools -->
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <img class="img-fluid pad" src="dist/img/photo2.png" alt="Photo">
-
-                <p>I took this photo this morning. What do you guys think?</p>
-              
-              </div>
-          </div>
-           
-              </div>
-               <div class="col-md-4">
-            <!-- Box Comment -->
-            <div class="card card-widget">
-              <div class="card-header">
-                <div class="user-block" style="text-align: center !important;float:none;">
-                <h4>BLog title</h4>
-                </div>
-                <!-- /.user-block -->
-                
-                <!-- /.card-tools -->
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <img class="img-fluid pad" src="dist/img/photo2.png" alt="Photo">
-
-                <p>I took this photo this morning. What do you guys think?</p>
-              
-              </div>
-          </div>
-           
-              </div>
-              <!-- /.card-footer -->
-     
-      </div>
-  </div><!-- /.container-fluid -->
-   
-    <!-- Main content -->
-    
+      
+ 
 
    
  
   <!-- /.content-wrapper -->
 
-  <footer class="main-footer" style="margin-left: 0px !important;">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.1.0-rc
+   <footer class="main-footer" style="margin-left: 0px !important;">
+    <div class="float-right ">
+     <a href="logout.php" class="btn btn-dark">Log out</a>
     </div>
-    <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2020 <a href="https://adminlte.io">Sai Khant kyaw</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
