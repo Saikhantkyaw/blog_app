@@ -9,7 +9,20 @@
    header("Location:login.php");
  }
     if ($_POST) {
-      $id=$_POST['id'];
+      if (empty($_POST['name']) || empty($_POST['email'])) {
+
+     if (empty($_POST['name'])) {
+       $name_err="* you need to fill name";
+     }
+     if (empty($_POST['email'])) {
+       $email_err="* you need to fill email";
+     }
+
+   }elseif(!empty($_POST['password'])&& strlen($_POST['password']) < 4){
+     $password_err="* your password must be 4 at least";
+   }else{
+     $id=$_POST['id'];
+   
     $name=$_POST['name'];
     $email=$_POST['email'];
     if (empty($_POST['role'])) {
@@ -35,13 +48,18 @@
         }
        
     }
+   }
+    
+  }
 
-    }else{
+     
+    
        $statment=$pdo->prepare("SELECT * FROM users WHERE id=".$_GET['id']);
        $statment->execute();
        $result= $statment->fetchall();
+   
 
-    }
+    
  
  ?>
           <?php require("header.php"); ?>
@@ -55,17 +73,24 @@
 
               <input type="hidden" name="id" value="<?=$result[0]['id'] ?>">
               <label for="">Name</label>
-              
+              <p class="text-danger"><?= empty($name_err)?'':$name_err;?></p>
               <input type="text" name="name" placeholder="enter your name" class="form-control" 
-              value="<?=$result[0]['name'] ?>" required>
+              value="<?=$result[0]['name'] ?>">
               
             </div>
             <div class="form-group">
               <label for="">Email</label>
-              
+              <p class="text-danger"><?= empty($email_err)?'':$email_err;?></p>
            <input type="email" name="email" placeholder="enter your email" class="form-control" 
-           value="<?=$result[0]['email'] ?>"required>
+           value="<?=$result[0]['email'] ?>">
               
+            </div>
+             <div class="form-group">
+              <label for="">password</label>
+               <p class="text-danger"><?= empty($password_err)?'':$password_err;?></p>
+           <input type="password" name="password" placeholder="enter your password" 
+           class="form-control" >
+              <span style="font-size: 10px">This user already has password!!</span>
             </div>
             <div class="form-group">
               <label for="">admin</label>

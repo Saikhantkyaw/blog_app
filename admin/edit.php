@@ -5,8 +5,18 @@
  {
  	header("Location:login.php");
  }
- if ($_POST) {
-  $id=$_POST['id'];
+ if ($_POST) { 
+  if (empty($_POST['title']) || empty($_POST['content'])  ) {
+
+     if (empty($_POST['title'])) {
+       $title_err="* you need to fill title";
+     }
+     if (empty($_POST['content'])) {
+       $content_err="* you need to fill content";
+     }
+   
+   }else{
+      $id=$_POST['id'];
   $title=$_POST['title'];
   $content=$_POST['content'];
 
@@ -49,13 +59,15 @@
   }
 
 
-}else{
+   }    
+ 
+}
  $statment=$pdo->prepare("SELECT * FROM posts WHERE id=".$_GET['id']);
  $statment->execute();
  $result= $statment->fetchall();
 
 
- }
+ 
  ?>
           <?php require("header.php"); ?>
             <h1 class="m-0">NEW POST</h1>
@@ -69,17 +81,20 @@
              enctype="multipart/form-data">
              <input type="hidden" name="id" value="<?= $result[0]['id'];  ?>">
              <div class="form-group">
-             	<label for="">Title</label>
+             	<label for="">Title</label> 
+               <p class="text-danger"><?= empty($title_err)?'':$title_err;?></p>
              	<input type="text" name="title" value="<?=$result[0]['title'] ?>"
                class="form-control">
              </div>
              <div class="form-group">
              	<label for="">Content</label>
+                <p class="text-danger"><?= empty($content_err)?'':$content_err;?></p>
                  <textarea name="content" rows="8" cols="80" class="form-control">
-                  <?= $result[0]['title'] ?></textarea>
+                  <?= $result[0]['content'] ?></textarea>
              </div>
              <div class="form-group">
-             	<label for="">image</label><br>
+             	<label for="">image</label><br> 
+               
               <img src="images/<?php echo $result[0]['image'] ?>"alt="" height="150" width="300">
               <br>
              	<input type="file" name="image" value="" >

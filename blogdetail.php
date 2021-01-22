@@ -29,7 +29,9 @@ $post_id= $_GET['id'];
 
  //$post_id=$_GET['id'];
  if ($_POST) {
-    $comment=$_POST['comment'];
+    if (empty($_POST['comment'])) {
+      $cmt_err="you need to file comment";
+    }else{$comment=$_POST['comment'];
       $statment=$pdo->prepare("INSERT INTO comments(content,user_id,post_id)
          VALUES (:content,:user_id,:post_id)");
         $result=$statment->execute(
@@ -38,7 +40,8 @@ $post_id= $_GET['id'];
         if ($result)
         {
           header("Location:blogdetail.php?id=".$post_id);
-        }
+        }}
+    
 
 
  }
@@ -117,6 +120,7 @@ $post_id= $_GET['id'];
                 <form action="" method="POST">
                  
                   <!-- .img-push is used to add margin to elements next to floating images -->
+                  <p class="text-danger"><?= empty($cmt_err)?'':$cmt_err;?></p>
                   <div class="img-push">
                     <input type="text"  name="comment"class="form-control form-control-sm" placeholder="Press enter to post comment">
                   </div>

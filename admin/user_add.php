@@ -9,7 +9,23 @@
    header("Location:login.php");
  }
     if ($_POST) {
-    $password=$_POST['password'];
+       if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password']) ||
+        strlen($_POST['password']) < 4) {
+
+     if (empty($_POST['name'])) {
+       $name_err="* you need to fill name";
+     }
+     if (empty($_POST['email'])) {
+       $email_err="* you need to fill email";
+     }
+     if (empty($_POST['password'])) {
+       $password_err="* you need to fill password";
+     }
+     if ( strlen($_POST['password']) < 4) {
+      $password_err="* your password must be 4 at least";
+     }
+     }else{
+       $password=$_POST['password'];
     $name=$_POST['name'];
     $email=$_POST['email'];
     if (empty($_POST['role'])) {
@@ -34,6 +50,8 @@
         }
     }
 
+     }
+   
     }
  
  ?>
@@ -47,21 +65,22 @@
              enctype="multipart/form-data">
             <div class="form-group">
               <label for="">Name</label>
+               <p class="text-danger"><?= empty($name_err)?'':$name_err;?></p>
               
-              <input type="text" name="name" placeholder="enter your name" class="form-control" required>
+              <input type="text" name="name" placeholder="enter your name" class="form-control">
               
             </div>
             <div class="form-group">
               <label for="">Email</label>
-              
-           <input type="email" name="email" placeholder="enter your email" class="form-control" required>
+               <p class="text-danger"><?= empty($email_err)?'':$email_err;?></p>
+           <input type="email" name="email" placeholder="enter your email" class="form-control" >
               
             </div>
             <div class="form-group">
               <label for="">password</label>
-              
+               <p class="text-danger"><?= empty($password_err)?'':$password_err;?></p>
            <input type="password" name="password" placeholder="enter your password" 
-           class="form-control" required>
+           class="form-control" >
               
             </div>
             <div class="form-group">

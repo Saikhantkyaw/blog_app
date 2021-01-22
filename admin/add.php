@@ -13,20 +13,34 @@
   $result=$statment->FETCHALL();
  if ($_POST) 
  {
-   $file='images/'.$_FILES['image']['name'];
+   if (empty($_POST['title']) || empty($_POST['content']) || empty($_FILES['image']['name']) ) {
+
+     if (empty($_POST['title'])) {
+       $title_err="* you need to file title";
+     }
+     if (empty($_POST['content'])) {
+       $content_err="* you need to file content";
+     }
+     if (empty($_FILES['image']['name'])) {
+      $img_err="* you must put image";
+     }
+    
+
+   }else{
+    $file='images/'.$_FILES['image']['name'];
    $imagetype=pathinfo($file,PATHINFO_EXTENSION);
    if ($imagetype!='jpg'&&$imagetype!='png'&&$imagetype!='jpeg')
     {
-   	echo "<script>alert('image must be jpg,png or jpeg')</script>";
+    echo "<script>alert('image must be jpg,png or jpeg')</script>";
     }
     else
      {
-    	$title=$_POST['title'];
-    	$content=$_POST['content'];
-    	$image=$_FILES['image']['name'];
+      $title=$_POST['title'];
+      $content=$_POST['content'];
+      $image=$_FILES['image']['name'];
 
 
-    	move_uploaded_file($_FILES['image']['tmp_name'], $file);
+      move_uploaded_file($_FILES['image']['tmp_name'], $file);
 
         $statment=$pdo->prepare("INSERT INTO posts(title,content,image,user_id)
          VALUES (:title,:content,:image,:user_id)");
@@ -39,6 +53,7 @@
             echo "<script>alert('new blog is posted');window.location.href='index.php'</script>";
         }
      }
+   }
 
  }
 
@@ -55,14 +70,17 @@
              enctype="multipart/form-data">
              <div class="form-group">
              	<label for="">Title</label>
-             	<input type="text" name="title" value="" class="form-control" required>
+              <p class="text-danger"><?= empty($title_err)?'':$title_err;?></p>
+             	<input type="text" name="title" value="" class="form-control" >
              </div>
              <div class="form-group">
              	<label for="">Content</label>
-                 <textarea name="content" rows="8" cols="80" class="form-control" required></textarea>
+              <p class="text-danger"><?= empty($content_err)?'':$content_err;?></p>
+                 <textarea name="content" rows="8" cols="80" class="form-control" ></textarea>
              </div>
              <div class="form-group">
-             	<label for="">image</label><br>
+             	<label for="">image</label>
+               <p class="text-danger"><?= empty($img_err)?'':$img_err;?></p>
              	<input type="file" name="image" value="" >
              </div>
              <div class="form-group">

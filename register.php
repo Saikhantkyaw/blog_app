@@ -2,8 +2,23 @@
    session_start();
   require("connection/config.php");
   if ($_POST)
-   { 
-    $name=$_POST['name'];
+   {   if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password']) ||
+        strlen($_POST['password']) < 4) {
+
+     if (empty($_POST['name'])) {
+       $name_err="* you need to fill name";
+     }
+     if (empty($_POST['email'])) {
+       $email_err="* you need to fill email";
+     }
+     if (empty($_POST['password'])) {
+       $password_err="* you need to fill password";
+     }
+     if ( strlen($_POST['password']) < 4) {
+      $password_err="* your password must be 4 at least";
+     }
+     }else{
+      $name=$_POST['name'];
     $email=$_POST['email'];
     $password=$_POST['password'];
 
@@ -27,6 +42,8 @@
 
   }
 
+     }
+    
 
     }
 
@@ -61,25 +78,27 @@
       <p class="login-box-msg">Register</p>
 
       <form action="register.php" method="post">
+        <p class="text-danger"><?= empty($name_err)?'':$name_err;?></p>
          <div class="input-group mb-3">
-          <input type="text" name="name" class="form-control" placeholder="Name" required>
+          <input type="text" name="name" class="form-control" placeholder="Name" >
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-file"></span>
+              <span class="fas fa-user"></span>
             </div>
           </div>
         </div>
-        
+        <p class="text-danger"><?= empty($email_err)?'':$email_err;?></p>
         <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control" placeholder="Email"  required>
+          <input type="email" name="email" class="form-control" placeholder="Email" >
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
         </div>
+        <p class="text-danger"><?= empty($password_err)?'':$password_err;?></p>
         <div class="input-group mb-3">
-          <input type="password"  name="password"  class="form-control" placeholder="Password" required>
+          <input type="password"  name="password"  class="form-control" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
