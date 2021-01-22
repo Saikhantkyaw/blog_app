@@ -1,6 +1,7 @@
 <?php 
  session_start();
  require("../connection/config.php");
+  require("../connection/common.php");
  if (empty(  $_SESSION['user_id'])&&empty(  $_SESSION['logged_in'])) 
  {
  	header("Location:login.php");
@@ -79,6 +80,7 @@
             	
              <form action="" method="post" accept-charset="utf-8" 
              enctype="multipart/form-data">
+              <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>">
              <input type="hidden" name="id" value="<?= $result[0]['id'];  ?>">
              <div class="form-group">
              	<label for="">Title</label> 

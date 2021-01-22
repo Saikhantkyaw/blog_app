@@ -1,6 +1,7 @@
 <?php
    session_start();
   require("connection/config.php");
+   require("connection/common.php");
   if ($_POST)
    {
   	$email=$_POST['email'];
@@ -59,6 +60,7 @@
       <p class="login-box-msg">Login</p>
 
       <form action="login.php" method="post">
+         <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>">
         <div class="input-group mb-3">
           <input type="email" name="email" class="form-control" placeholder="Email">
           <div class="input-group-append">

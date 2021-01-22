@@ -1,6 +1,7 @@
 <?php 
 session_start();
  require("connection/config.php");
+  require("connection/common.php");
  if (empty(  $_SESSION['user_id'])&&empty(  $_SESSION['logged_in'])) 
  {
   header("Location:login.php");
@@ -30,7 +31,7 @@ $post_id= $_GET['id'];
  //$post_id=$_GET['id'];
  if ($_POST) {
     if (empty($_POST['comment'])) {
-      $cmt_err="you need to file comment";
+      $cmt_err="you need to fill comment";
     }else{$comment=$_POST['comment'];
       $statment=$pdo->prepare("INSERT INTO comments(content,user_id,post_id)
          VALUES (:content,:user_id,:post_id)");
@@ -118,7 +119,7 @@ $post_id= $_GET['id'];
               <!-- /.card-footer -->
               <div class="card-footer">
                 <form action="" method="POST">
-                 
+                  <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>">
                   <!-- .img-push is used to add margin to elements next to floating images -->
                   <p class="text-danger"><?= empty($cmt_err)?'':$cmt_err;?></p>
                   <div class="img-push">
