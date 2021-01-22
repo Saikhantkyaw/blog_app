@@ -1,6 +1,7 @@
 <?php 
 session_start();
  require("connection/config.php");
+ require("connection/common.php");
  if (empty(  $_SESSION['user_id'])&&empty(  $_SESSION['logged_in'])) 
  {
  	header("Location:login.php");
@@ -76,7 +77,7 @@ session_start();
             <div class="card card-widget">
               <div class="card-header">
                 <div class="user-block" style="text-align: center !important;float:none;">
-                <h4> <?php echo $value['title']; ?></h4>
+                <h4> <?php echo mo($value['title']); ?></h4>
                 </div>
                 <!-- /.user-block -->
                 
@@ -88,7 +89,7 @@ session_start();
                <img src="admin/images/<?php echo $value['image']; ?>" class="img-fluid pad"
                style="height: 200 !important;"></a>
 
-                <p> <?php echo $value['content']; ?> </p>
+                <p> <?php echo mo($value['content']); ?> </p>
               
               </div>
           </div>

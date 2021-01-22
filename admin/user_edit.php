@@ -77,14 +77,14 @@
               <label for="">Name</label>
               <p class="text-danger"><?= empty($name_err)?'':$name_err;?></p>
               <input type="text" name="name" placeholder="enter your name" class="form-control" 
-              value="<?=$result[0]['name'] ?>">
+              value="<?=mo($result[0]['name']); ?>">
               
             </div>
             <div class="form-group">
               <label for="">Email</label>
               <p class="text-danger"><?= empty($email_err)?'':$email_err;?></p>
            <input type="email" name="email" placeholder="enter your email" class="form-control" 
-           value="<?=$result[0]['email'] ?>">
+           value="<?=mo($result[0]['email']); ?>">
               
             </div>
              <div class="form-group">

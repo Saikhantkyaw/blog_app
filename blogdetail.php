@@ -82,7 +82,7 @@ $post_id= $_GET['id'];
             <div class="card card-widget">
               <div class="card-header">
                <div class="user-block" style="text-align: center !important;float:none;">
-                <h4><?=$result[0]['title'] ?></h4>
+                <h4><?=mo($result[0]['title']); ?></h4>
                 </div>
               
                 <!-- /.card-tools -->
@@ -103,11 +103,11 @@ $post_id= $_GET['id'];
                     <div class="comment-text" >
                     <?php foreach ($cmresult as $key => $value): ?>
                       <span class="username" style="margin:left  !important;">
-                      <?php echo $userresult[$key][0]['name']; ;?>
+                      <?php echo mo($userresult[$key][0]['name']); ;?>
                       <span class="text-muted float-right">
                         <?php echo $value['created_at'] ?></span>
                     </span><!-- /.username -->
-                    <?php echo $value['content']; ?>
+                    <?php echo mo($value['content']); ?>
                     <?php endforeach ?>
                   </div>
                   <?php } ?>

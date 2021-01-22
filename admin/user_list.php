@@ -1,7 +1,7 @@
 <?php 
  session_start();
  require("../connection/config.php");
-
+ require("../connection/common.php");
  if (empty(  $_SESSION['user_id'])&&empty(  $_SESSION['logged_in'])) 
  {
  	header("Location:login.php");
@@ -91,8 +91,8 @@ $statment= $pdo->prepare("SELECT * FROM users WHERE name LIKE '%$searchkey%' ORD
            				{?>
            				      <tr>
                       <td> <?php echo $i; ?> </td>
-                      <td style ="width:400px;"> <?php echo $value['name'] ;?> </td>
-                      <td style ="width:450px;"> <?php echo $value['email'];?>
+                      <td style ="width:400px;"> <?php echo mo($value['name']) ;?> </td>
+                      <td style ="width:450px;"> <?php echo mo($value['email']);?>
                       	
                       </td>
                       <td><?php if($value['role']!=1){echo "user";}else{echo"admin";}?></td>

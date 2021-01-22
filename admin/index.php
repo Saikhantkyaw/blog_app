@@ -1,6 +1,7 @@
 <?php 
  session_start();
  require("../connection/config.php");
+ require("../connection/common.php");
  if (empty(  $_SESSION['user_id'])&&empty(  $_SESSION['logged_in'])) 
  {
  	header("Location:login.php");
@@ -89,8 +90,8 @@ $statment= $pdo->prepare("SELECT * FROM posts WHERE title LIKE '%$searchkey%' OR
            				{?>
            				      <tr>
                       <td> <?php echo $i; ?> </td>
-                      <td style ="width:400px;"> <?php echo $value['title'] ;?> </td>
-                      <td style ="width:450px;"> <?php echo substr( $value['content'],0,50) ;?>
+                      <td style ="width:400px;"> <?php echo mo($value['title']) ;?> </td>
+                    <td style ="width:450px;"> <?php echo substr(mo( $value['content']),0,50) ;?>
                       	
                       </td>
                       <td>

@@ -81,18 +81,18 @@
              <form action="" method="post" accept-charset="utf-8" 
              enctype="multipart/form-data">
               <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>">
-             <input type="hidden" name="id" value="<?= $result[0]['id'];  ?>">
+             <input type="hidden" name="id" value="<?= mo($result[0]['id']);  ?>">
              <div class="form-group">
              	<label for="">Title</label> 
                <p class="text-danger"><?= empty($title_err)?'':$title_err;?></p>
-             	<input type="text" name="title" value="<?=$result[0]['title'] ?>"
+             	<input type="text" name="title" value="<?=mo($result[0]['title']); ?>"
                class="form-control">
              </div>
              <div class="form-group">
              	<label for="">Content</label>
                 <p class="text-danger"><?= empty($content_err)?'':$content_err;?></p>
                  <textarea name="content" rows="8" cols="80" class="form-control">
-                  <?= $result[0]['content'] ?></textarea>
+                  <?= mo($result[0]['content']); ?></textarea>
              </div>
              <div class="form-group">
              	<label for="">image</label><br> 

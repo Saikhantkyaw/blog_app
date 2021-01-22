@@ -15,4 +15,7 @@ if (empty($_SESSION['token'])) {
  		unset($_SESSION['token']);
  	}
  }
+ function mo($html) {
+	return htmlspecialchars($html, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8");
+}
  ?>
