@@ -25,6 +25,7 @@
    
     $name=$_POST['name'];
     $email=$_POST['email'];
+    $password=password_hash($_POST['password'], PASSWORD_DEFAULT);
     if (empty($_POST['role'])) {
       $role=0;
     }else{
@@ -38,7 +39,7 @@
       echo "<script>alert('input invaid')</script>";
     }else{
        $statment=$pdo->prepare("UPDATE users SET name='$name',email='$email',
-        role='$role' WHERE
+        role='$role',password='$password' WHERE
        id='$id'");
         $result=$statment->execute();
         if ($result) {

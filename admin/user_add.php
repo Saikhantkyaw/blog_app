@@ -25,7 +25,7 @@
       $password_err="* your password must be 4 at least";
      }
      }else{
-       $password=$_POST['password'];
+       $password=password_hash($_POST['password'], PASSWORD_DEFAULT);
     $name=$_POST['name'];
     $email=$_POST['email'];
     if (empty($_POST['role'])) {
